@@ -1,0 +1,642 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SubCulture Identity & Mental Health Assessment</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            line-height: 1.6;
+            color: #333;
+        }
+
+        /* Navigation */
+        nav {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 1rem 2rem;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        nav .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        nav h1 {
+            font-size: 1.5em;
+        }
+
+        nav a {
+            color: white;
+            text-decoration: none;
+            margin-left: 2rem;
+            transition: opacity 0.3s;
+        }
+
+        nav a:hover {
+            opacity: 0.8;
+        }
+
+        /* Hero Section */
+        .hero {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 80px 2rem;
+            text-align: center;
+        }
+
+        .hero .container {
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+
+        .hero h1 {
+            font-size: 3.5em;
+            margin-bottom: 20px;
+            line-height: 1.2;
+        }
+
+        .hero p {
+            font-size: 1.3em;
+            margin-bottom: 10px;
+            opacity: 0.95;
+        }
+
+        .hero .subtitle {
+            font-size: 1.1em;
+            opacity: 0.85;
+            margin-bottom: 30px;
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 15px 40px;
+            margin: 10px;
+            border: none;
+            border-radius: 8px;
+            font-size: 1.1em;
+            cursor: pointer;
+            transition: all 0.3s;
+            text-decoration: none;
+            font-weight: 600;
+        }
+
+        .btn-primary {
+            background: white;
+            color: #667eea;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.2);
+        }
+
+        .btn-secondary {
+            background: rgba(255,255,255,0.2);
+            color: white;
+            border: 2px solid white;
+        }
+
+        .btn-secondary:hover {
+            background: rgba(255,255,255,0.3);
+        }
+
+        /* Container */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+
+        /* Sections */
+        section {
+            padding: 60px 2rem;
+        }
+
+        section h2 {
+            font-size: 2.5em;
+            margin-bottom: 40px;
+            text-align: center;
+            color: #333;
+        }
+
+        /* Features Grid */
+        .features {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 30px;
+            margin-top: 40px;
+        }
+
+        .feature-card {
+            background: #f9f9f9;
+            padding: 30px;
+            border-radius: 10px;
+            text-align: center;
+            transition: all 0.3s;
+            border: 1px solid #e0e0e0;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(102, 126, 234, 0.2);
+            border-color: #667eea;
+        }
+
+        .feature-card .icon {
+            font-size: 3em;
+            margin-bottom: 15px;
+        }
+
+        .feature-card h3 {
+            color: #667eea;
+            margin-bottom: 10px;
+        }
+
+        /* How It Works */
+        .steps {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 30px;
+            margin-top: 40px;
+        }
+
+        .step {
+            padding: 30px;
+            background: linear-gradient(135deg, #667eea15 0%, #764ba215 100%);
+            border-radius: 10px;
+            border-left: 4px solid #667eea;
+        }
+
+        .step-number {
+            display: inline-block;
+            width: 40px;
+            height: 40px;
+            background: #667eea;
+            color: white;
+            border-radius: 50%;
+            text-align: center;
+            line-height: 40px;
+            font-weight: bold;
+            margin-bottom: 15px;
+        }
+
+        /* Outputs */
+        .outputs {
+            background: #f5f5f5;
+        }
+
+        .output-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin-top: 30px;
+        }
+
+        .output-item {
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            border-left: 4px solid #667eea;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+
+        .output-item strong {
+            color: #667eea;
+            display: block;
+            margin-bottom: 5px;
+        }
+
+        /* QR Code Section */
+        .qr-section {
+            background: linear-gradient(135deg, #667eea10 0%, #764ba210 100%);
+            text-align: center;
+            padding: 60px 2rem;
+        }
+
+        .qr-container {
+            max-width: 400px;
+            margin: 30px auto;
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+        }
+
+        .qr-container img {
+            width: 100%;
+            max-width: 300px;
+            border-radius: 8px;
+        }
+
+        .qr-url {
+            margin-top: 20px;
+            padding: 15px;
+            background: #f0f4ff;
+            border-radius: 8px;
+            word-break: break-all;
+            color: #667eea;
+            font-weight: 600;
+        }
+
+        /* Screenshots */
+        .screenshots {
+            background: #f9f9f9;
+        }
+
+        .screenshot-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            margin-top: 40px;
+        }
+
+        .screenshot {
+            background: white;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+            transition: transform 0.3s;
+        }
+
+        .screenshot:hover {
+            transform: scale(1.02);
+        }
+
+        .screenshot-img {
+            width: 100%;
+            height: 300px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 1.2em;
+            text-align: center;
+            padding: 20px;
+        }
+
+        .screenshot-label {
+            padding: 15px;
+            text-align: center;
+            background: white;
+            font-weight: 600;
+            color: #333;
+        }
+
+        /* Disclaimer */
+        .disclaimer {
+            background: #fff3cd;
+            border-left: 4px solid #ffc107;
+            padding: 20px;
+            border-radius: 8px;
+            margin: 30px 0;
+            font-size: 0.95em;
+            line-height: 1.6;
+        }
+
+        /* Footer */
+        footer {
+            background: #333;
+            color: white;
+            text-align: center;
+            padding: 30px;
+            margin-top: 60px;
+        }
+
+        footer a {
+            color: #667eea;
+            text-decoration: none;
+        }
+
+        footer a:hover {
+            text-decoration: underline;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 2.5em;
+            }
+
+            .hero p {
+                font-size: 1.1em;
+            }
+
+            section h2 {
+                font-size: 2em;
+            }
+
+            nav h1 {
+                font-size: 1.2em;
+            }
+
+            nav a {
+                margin-left: 1rem;
+                font-size: 0.9em;
+            }
+        }
+
+        /* Table Styling */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+            background: white;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+
+        th {
+            background: #667eea;
+            color: white;
+            padding: 15px;
+            text-align: left;
+        }
+
+        td {
+            padding: 12px 15px;
+            border-bottom: 1px solid #e0e0e0;
+        }
+
+        tr:hover {
+            background: #f5f5f5;
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav>
+        <div class="container">
+            <h1>🌈 SubCulture NN Assessment</h1>
+            <div>
+                <a href="#features">Features</a>
+                <a href="#how-it-works">How It Works</a>
+                <a href="#access">Access App</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="container">
+            <h1>Understanding Culture, Identity & Mental Health</h1>
+            <p class="subtitle">Deep Learning-Powered Assessment Tool</p>
+            <p>Explore how engagement with different subcultures relates to various mental health indicators through advanced neural networks.</p>
+            <div style="margin-top: 30px;">
+                <a href="/assessment" class="btn btn-primary">Start Assessment</a>
+                <a href="#access" class="btn btn-secondary">Learn More</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section id="features">
+        <div class="container">
+            <h2>Key Features</h2>
+            <div class="features">
+                <div class="feature-card">
+                    <div class="icon">🎨</div>
+                    <h3>5 Subcultural Identities</h3>
+                    <p>Assess engagement with anime/games, idol culture, sports, fashion, and hip-hop communities</p>
+                </div>
+                <div class="feature-card">
+                    <div class="icon">🧠</div>
+                    <h3>13 Mental Health Measures</h3>
+                    <p>Get predictions for depression, anxiety, anger, empathy, and suicidal ideation</p>
+                </div>
+                <div class="feature-card">
+                    <div class="icon">⚡</div>
+                    <h3>Instant Results</h3>
+                    <p>Neural network powered predictions delivered in seconds with detailed interpretations</p>
+                </div>
+                <div class="feature-card">
+                    <div class="icon">📊</div>
+                    <h3>Percentile Scores</h3>
+                    <p>Understand your scores with visual progress bars and risk level summaries</p>
+                </div>
+                <div class="feature-card">
+                    <div class="icon">🔍</div>
+                    <h3>Research-Based</h3>
+                    <p>Built on peer-reviewed research analyzing subculture-mental health connections</p>
+                </div>
+                <div class="feature-card">
+                    <div class="icon">🛡️</div>
+                    <h3>Private & Secure</h3>
+                    <p>No data storage - results are generated on-demand without tracking</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- How It Works Section -->
+    <section id="how-it-works" style="background: #f5f5f5;">
+        <div class="container">
+            <h2>How It Works</h2>
+            <div class="steps">
+                <div class="step">
+                    <div class="step-number">1</div>
+                    <h3>Answer Questions</h3>
+                    <p>Rate your engagement with 5 subcultures on a 1-7 scale. Takes about 2 minutes.</p>
+                </div>
+                <div class="step">
+                    <div class="step-number">2</div>
+                    <h3>Neural Network</h3>
+                    <p>A deep learning model trained on 300+ samples analyzes your responses.</p>
+                </div>
+                <div class="step">
+                    <div class="step-number">3</div>
+                    <h3>Get Results</h3>
+                    <p>Receive 13 mental health predictions with detailed interpretations and risk levels.</p>
+                </div>
+                <div class="step">
+                    <div class="step-number">4</div>
+                    <h3>Take Action</h3>
+                    <p>Use insights for self-reflection or consult professionals if needed.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Input Variables Section -->
+    <section>
+        <div class="container">
+            <h2>What We Assess</h2>
+            <h3 style="margin-top: 30px; margin-bottom: 20px; color: #667eea;">Subcultural Identity Measures (Input)</h3>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Subculture</th>
+                        <th>Description</th>
+                        <th>Scale</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>🎨 ACG Identity</strong></td>
+                        <td>Animation, Comics, Games engagement</td>
+                        <td>1-7</td>
+                    </tr>
+                    <tr>
+                        <td><strong>⭐ Idol Culture</strong></td>
+                        <td>K-pop, J-pop fan engagement</td>
+                        <td>1-7</td>
+                    </tr>
+                    <tr>
+                        <td><strong>⚽ Sports Fandom</strong></td>
+                        <td>Sports team & athletic community engagement</td>
+                        <td>1-7</td>
+                    </tr>
+                    <tr>
+                        <td><strong>👗 Fashion Identity</strong></td>
+                        <td>Fashion subculture engagement</td>
+                        <td>1-7</td>
+                    </tr>
+                    <tr>
+                        <td><strong>🎤 Hip-Hop Culture</strong></td>
+                        <td>Hip-hop, rap & urban culture engagement</td>
+                        <td>1-7</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </section>
+
+    <!-- Output Variables Section -->
+    <section class="outputs">
+        <div class="container">
+            <h2>Predicted Mental Health Measures</h2>
+            <p style="text-align: center; margin-bottom: 30px;">13 psychological outcomes based on your subcultural identity scores</p>
+            <div class="output-grid">
+                <div class="output-item">
+                    <strong>😔 Depression</strong>
+                    Beck Depression Inventory (0-63)
+                </div>
+                <div class="output-item">
+                    <strong>⚠️ Suicidal Ideation</strong>
+                    Risk Assessment (0-12)
+                </div>
+                <div class="output-item">
+                    <strong>😠 State Anger</strong>
+                    Current Anger (10-40)
+                </div>
+                <div class="output-item">
+                    <strong>😤 Trait Anger</strong>
+                    Anger Proneness (10-40)
+                </div>
+                <div class="output-item">
+                    <strong>🤐 Anger Suppression</strong>
+                    Internalized Anger (8-32)
+                </div>
+                <div class="output-item">
+                    <strong>💬 Anger Expression</strong>
+                    Expressed Anger (9-36)
+                </div>
+                <div class="output-item">
+                    <strong>🎯 Anger Control</strong>
+                    Anger Management (7-28)
+                </div>
+                <div class="output-item">
+                    <strong>💝 Emotional Contagion</strong>
+                    Emotional Sensitivity (7-35)
+                </div>
+                <div class="output-item">
+                    <strong>🤝 Perspective Taking</strong>
+                    Empathy (7-35)
+                </div>
+                <div class="output-item">
+                    <strong>🎗️ Feeling Understood</strong>
+                    Social Validation (7-35)
+                </div>
+                <div class="output-item">
+                    <strong>👥 Perceived Response</strong>
+                    Social Perception (7-35)
+                </div>
+                <div class="output-item">
+                    <strong>😰 State Anxiety</strong>
+                    Current Anxiety (20-80)
+                </div>
+                <div class="output-item">
+                    <strong>😟 Trait Anxiety</strong>
+                    Anxiety Proneness (20-80)
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Disclaimer -->
+    <section style="background: white;">
+        <div class="container">
+            <div class="disclaimer">
+                <strong>⚠️ Important Disclaimer:</strong>
+                <p>This tool is for educational and research purposes only. It provides statistical predictions, NOT clinical diagnoses. Results should not be used as the sole basis for mental health decisions. If you're experiencing mental health concerns, please consult a qualified mental health professional. Cultural engagement is complex and multifactorial - individual circumstances matter greatly.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Access Section -->
+    <section id="access" class="qr-section">
+        <div class="container">
+            <h2>Access the Assessment</h2>
+            <p style="font-size: 1.1em; margin-bottom: 20px;">Scan the QR code or visit the URL below</p>
+
+            <div class="qr-container">
+                <h3 style="margin-bottom: 15px;">📱 Scan with Phone Camera</h3>
+                <svg width="300" height="300" xmlns="http://www.w3.org/2000/svg">
+                    <!-- QR Code placeholder -->
+                    <rect width="300" height="300" fill="white" stroke="#667eea" stroke-width="2"/>
+                    <text x="150" y="150" text-anchor="middle" dy=".3em" fill="#999" font-size="14">
+                        QR Code<tspan x="150" dy="1.2em">(See assessment_qr.png)</tspan>
+                    </text>
+                </svg>
+                <div class="qr-url">
+                    /assessment
+                </div>
+                <p style="margin-top: 15px; color: #666; font-size: 0.9em;">
+                    Save the image or type the URL directly in your browser
+                </p>
+            </div>
+
+            <div style="margin-top: 30px;">
+                <a href="/assessment" class="btn btn-primary" style="font-size: 1.2em; padding: 18px 50px;">
+                    Start Assessment Now
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <h3>SubCulture Identity & Mental Health Assessment</h3>
+            <p style="margin-top: 10px; margin-bottom: 20px;">
+                Research-based deep learning tool for understanding cultural identity and psychological outcomes
+            </p>
+            <p>
+                <strong>Live App:</strong> <a href="/assessment">/assessment</a>
+            </p>
+            <p style="margin-top: 20px; opacity: 0.8;">
+                Built with TensorFlow • Flask • Render<br>
+                Based on peer-reviewed research in cultural psychology and mental health
+            </p>
+            <p style="margin-top: 20px; font-size: 0.9em; opacity: 0.7;">
+                © 2026 SubCulture NN Project • For Educational & Research Purposes
+            </p>
+        </div>
+    </footer>
+
+</body>
+</html>

@@ -197,6 +197,11 @@ def load_model():
         return False
 
 @app.route('/')
+def landing():
+    """Render the landing/presentation page."""
+    return render_template('presentation.html')
+
+@app.route('/assessment')
 def index():
     """Render the main assessment page."""
     return render_template('index.html', questions=ASSESSMENT_QUESTIONS)
