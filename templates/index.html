@@ -1,0 +1,589 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Subcultural Identity & Mental Health Assessment</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .container {
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            max-width: 900px;
+            width: 100%;
+            padding: 40px;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        h1 {
+            color: #333;
+            font-size: 2.5em;
+            margin-bottom: 10px;
+        }
+
+        .subtitle {
+            color: #666;
+            font-size: 1.1em;
+            margin-bottom: 5px;
+        }
+
+        .description {
+            color: #999;
+            font-size: 0.95em;
+            max-width: 600px;
+            margin: 15px auto 0;
+            line-height: 1.5;
+        }
+
+        .disclaimer {
+            background: #f0f4ff;
+            border-left: 4px solid #667eea;
+            padding: 15px;
+            margin: 20px 0;
+            border-radius: 4px;
+            font-size: 0.9em;
+            color: #555;
+            line-height: 1.6;
+        }
+
+        .assessment-section {
+            margin: 40px 0;
+            padding-bottom: 30px;
+            border-bottom: 1px solid #eee;
+        }
+
+        .assessment-section:last-of-type {
+            border-bottom: none;
+        }
+
+        .section-title {
+            font-size: 1.4em;
+            color: #333;
+            margin-bottom: 10px;
+        }
+
+        .section-description {
+            color: #666;
+            margin-bottom: 20px;
+            font-size: 0.95em;
+        }
+
+        .likert-scale {
+            display: flex;
+            justify-content: space-between;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+
+        .scale-labels {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 8px;
+            font-size: 0.85em;
+            color: #999;
+        }
+
+        .likert-input {
+            flex: 1;
+            text-align: center;
+        }
+
+        .likert-input input {
+            width: 100%;
+            height: 40px;
+            cursor: pointer;
+            accent-color: #667eea;
+        }
+
+        .likert-input input:hover {
+            background-color: #f5f5f5;
+        }
+
+        .likert-input.active {
+            background-color: #f0f4ff;
+            border-radius: 6px;
+        }
+
+        .button-group {
+            display: flex;
+            gap: 15px;
+            margin-top: 40px;
+            justify-content: center;
+        }
+
+        button {
+            padding: 12px 30px;
+            font-size: 1em;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: 600;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(102, 126, 234, 0.4);
+        }
+
+        .btn-secondary {
+            background: #f0f4ff;
+            color: #667eea;
+        }
+
+        .btn-secondary:hover {
+            background: #e6ebff;
+        }
+
+        button:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        .loading {
+            display: none;
+            text-align: center;
+            padding: 20px;
+        }
+
+        .spinner {
+            border: 4px solid #f3f3f3;
+            border-top: 4px solid #667eea;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            animation: spin 1s linear infinite;
+            margin: 0 auto 10px;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .results {
+            display: none;
+            margin-top: 40px;
+            padding-top: 40px;
+            border-top: 2px solid #eee;
+        }
+
+        .results.show {
+            display: block;
+        }
+
+        .results-title {
+            font-size: 1.8em;
+            color: #333;
+            margin-bottom: 30px;
+            text-align: center;
+        }
+
+        .risk-summary {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 25px;
+            border-radius: 8px;
+            margin-bottom: 30px;
+        }
+
+        .risk-item {
+            margin: 12px 0;
+            font-size: 1.1em;
+        }
+
+        .risk-label {
+            font-weight: 600;
+            text-transform: uppercase;
+            font-size: 0.85em;
+            opacity: 0.9;
+            margin-right: 10px;
+        }
+
+        .prediction-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 20px;
+            margin-top: 30px;
+        }
+
+        .prediction-card {
+            background: #f9f9f9;
+            border: 1px solid #e0e0e0;
+            border-radius: 8px;
+            padding: 20px;
+            transition: all 0.3s ease;
+        }
+
+        .prediction-card:hover {
+            border-color: #667eea;
+            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.15);
+        }
+
+        .card-title {
+            font-weight: 600;
+            color: #333;
+            font-size: 1.1em;
+            margin-bottom: 8px;
+        }
+
+        .card-scale {
+            color: #999;
+            font-size: 0.85em;
+            margin-bottom: 15px;
+        }
+
+        .card-value {
+            font-size: 2em;
+            color: #667eea;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+
+        .progress-bar {
+            background: #e0e0e0;
+            height: 8px;
+            border-radius: 4px;
+            overflow: hidden;
+            margin-bottom: 10px;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #667eea, #764ba2);
+            transition: width 0.5s ease;
+        }
+
+        .card-interpretation {
+            color: #666;
+            font-size: 0.85em;
+            line-height: 1.4;
+            margin-top: 10px;
+        }
+
+        .error {
+            background: #ffebee;
+            border-left: 4px solid #d32f2f;
+            color: #c62828;
+            padding: 15px;
+            border-radius: 4px;
+            display: none;
+        }
+
+        .error.show {
+            display: block;
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 20px;
+            }
+
+            h1 {
+                font-size: 1.8em;
+            }
+
+            .prediction-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .button-group {
+                flex-direction: column;
+            }
+
+            button {
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>🌈 Subcultural Identity Assessment</h1>
+            <p class="subtitle">Understanding Culture, Identity & Mental Health</p>
+            <p class="description">
+                This assessment examines how engagement with different subcultures (anime, idol culture, sports, fashion, hip-hop)
+                relates to various mental health indicators. Answer honestly to receive personalized insights.
+            </p>
+            <div class="disclaimer">
+                <strong>⚠️ Important Disclaimer:</strong> This tool is for educational and research purposes only.
+                It provides estimates based on statistical models, not clinical diagnoses.
+                If you're experiencing mental health concerns, please consult a qualified mental health professional.
+            </div>
+        </header>
+
+        <form id="assessmentForm">
+            <!-- ACG Identity Section -->
+            <div class="assessment-section">
+                <h2 class="section-title">🎨 Animation/Comics/Games (ACG) Culture</h2>
+                <p class="section-description">Your engagement with anime, manga, gaming, and related communities</p>
+                <div>
+                    <div class="scale-labels">
+                        <span>Disagree Strongly</span>
+                        <span>Neutral</span>
+                        <span>Agree Strongly</span>
+                    </div>
+                    <div class="likert-scale">
+                        <div class="likert-input"><input type="range" name="acg_id" min="1" max="7" value="4" class="scale-slider"></div>
+                    </div>
+                    <div style="text-align: center; color: #999; font-size: 0.9em;">
+                        <span class="scale-value" data-for="acg_id">4</span> / 7
+                    </div>
+                </div>
+            </div>
+
+            <!-- Idol Culture Section -->
+            <div class="assessment-section">
+                <h2 class="section-title">⭐ Idol Culture (K-pop, J-pop, etc.)</h2>
+                <p class="section-description">Your engagement with music idols and idol fandoms</p>
+                <div>
+                    <div class="scale-labels">
+                        <span>Disagree Strongly</span>
+                        <span>Neutral</span>
+                        <span>Agree Strongly</span>
+                    </div>
+                    <div class="likert-scale">
+                        <div class="likert-input"><input type="range" name="idl_id" min="1" max="7" value="4" class="scale-slider"></div>
+                    </div>
+                    <div style="text-align: center; color: #999; font-size: 0.9em;">
+                        <span class="scale-value" data-for="idl_id">4</span> / 7
+                    </div>
+                </div>
+            </div>
+
+            <!-- Sports Identity Section -->
+            <div class="assessment-section">
+                <h2 class="section-title">⚽ Sports Fandom</h2>
+                <p class="section-description">Your engagement with sports teams and sports culture</p>
+                <div>
+                    <div class="scale-labels">
+                        <span>Disagree Strongly</span>
+                        <span>Neutral</span>
+                        <span>Agree Strongly</span>
+                    </div>
+                    <div class="likert-scale">
+                        <div class="likert-input"><input type="range" name="sp_id" min="1" max="7" value="4" class="scale-slider"></div>
+                    </div>
+                    <div style="text-align: center; color: #999; font-size: 0.9em;">
+                        <span class="scale-value" data-for="sp_id">4</span> / 7
+                    </div>
+                </div>
+            </div>
+
+            <!-- Fashion Section -->
+            <div class="assessment-section">
+                <h2 class="section-title">👗 Fashion Culture</h2>
+                <p class="section-description">Your engagement with fashion communities and style expression</p>
+                <div>
+                    <div class="scale-labels">
+                        <span>Disagree Strongly</span>
+                        <span>Neutral</span>
+                        <span>Agree Strongly</span>
+                    </div>
+                    <div class="likert-scale">
+                        <div class="likert-input"><input type="range" name="fas_id" min="1" max="7" value="4" class="scale-slider"></div>
+                    </div>
+                    <div style="text-align: center; color: #999; font-size: 0.9em;">
+                        <span class="scale-value" data-for="fas_id">4</span> / 7
+                    </div>
+                </div>
+            </div>
+
+            <!-- Hip-Hop Section -->
+            <div class="assessment-section">
+                <h2 class="section-title">🎤 Hip-Hop Culture</h2>
+                <p class="section-description">Your engagement with hip-hop, rap, and urban culture</p>
+                <div>
+                    <div class="scale-labels">
+                        <span>Disagree Strongly</span>
+                        <span>Neutral</span>
+                        <span>Agree Strongly</span>
+                    </div>
+                    <div class="likert-scale">
+                        <div class="likert-input"><input type="range" name="hip_id" min="1" max="7" value="4" class="scale-slider"></div>
+                    </div>
+                    <div style="text-align: center; color: #999; font-size: 0.9em;">
+                        <span class="scale-value" data-for="hip_id">4</span> / 7
+                    </div>
+                </div>
+            </div>
+
+            <div class="button-group">
+                <button type="button" class="btn-secondary" onclick="resetForm()">Reset</button>
+                <button type="submit" class="btn-primary">Get Assessment Results</button>
+            </div>
+        </form>
+
+        <div class="loading" id="loading">
+            <div class="spinner"></div>
+            <p>Analyzing your responses...</p>
+        </div>
+
+        <div class="error" id="error"></div>
+
+        <div class="results" id="results">
+            <h2 class="results-title">Your Assessment Results</h2>
+
+            <div class="risk-summary" id="riskSummary">
+                <h3 style="margin-bottom: 15px; font-size: 1.2em;">Mental Health Risk Overview</h3>
+                <div class="risk-item">
+                    <span class="risk-label">Depression Level:</span>
+                    <span id="depressionRisk">—</span>
+                </div>
+                <div class="risk-item">
+                    <span class="risk-label">Anxiety Level:</span>
+                    <span id="anxietyRisk">—</span>
+                </div>
+                <div class="risk-item">
+                    <span class="risk-label">Suicidal Ideation:</span>
+                    <span id="suicidalRisk">—</span>
+                </div>
+            </div>
+
+            <h3 style="font-size: 1.2em; margin-bottom: 20px; color: #333;">Detailed Mental Health Indicators</h3>
+            <div class="prediction-grid" id="predictionsGrid">
+                <!-- Populated by JavaScript -->
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Update slider values in real-time
+        document.querySelectorAll('.scale-slider').forEach(slider => {
+            slider.addEventListener('input', function() {
+                const valueSpan = document.querySelector(`.scale-value[data-for="${this.name}"]`);
+                valueSpan.textContent = this.value;
+            });
+        });
+
+        // Form submission
+        document.getElementById('assessmentForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+
+            const formData = new FormData(document.getElementById('assessmentForm'));
+            const data = Object.fromEntries(formData);
+
+            // Convert to numbers
+            Object.keys(data).forEach(key => {
+                data[key] = parseInt(data[key]);
+            });
+
+            showLoading(true);
+            hideError();
+
+            try {
+                const response = await fetch('/api/predict', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify(data)
+                });
+
+                const result = await response.json();
+
+                if (result.success) {
+                    displayResults(result.predictions, result.risk_factors);
+                } else {
+                    showError(result.message || 'Prediction failed');
+                }
+            } catch (error) {
+                showError(`Error: ${error.message}`);
+            } finally {
+                showLoading(false);
+            }
+        });
+
+        function displayResults(predictions, riskFactors) {
+            // Update risk summary
+            document.getElementById('depressionRisk').textContent = riskFactors.depression || '—';
+            document.getElementById('anxietyRisk').textContent = riskFactors.anxiety || '—';
+            document.getElementById('suicidalRisk').textContent = riskFactors.suicidal_ideation || '—';
+
+            // Create prediction cards
+            const grid = document.getElementById('predictionsGrid');
+            grid.innerHTML = '';
+
+            const categoryOrder = [
+                'bdi_sum', 'suicid', 'ax_state', 'ax_trait',
+                'anger_state', 'anger_trait', 'anger_in', 'anger_out', 'anger_control',
+                'emp_ec', 'emp_pt', 'emp_fs', 'emp_pd'
+            ];
+
+            categoryOrder.forEach(key => {
+                if (predictions[key]) {
+                    const pred = predictions[key];
+                    const card = document.createElement('div');
+                    card.className = 'prediction-card';
+                    card.innerHTML = `
+                        <div class="card-title">${pred.name}</div>
+                        <div class="card-scale">${pred.scale}</div>
+                        <div class="card-value">${pred.value}</div>
+                        <div class="progress-bar">
+                            <div class="progress-fill" style="width: ${pred.percentage}%"></div>
+                        </div>
+                        <div style="color: #999; font-size: 0.85em; margin-bottom: 10px;">
+                            Range: ${pred.range[0]} - ${pred.range[1]} (${pred.percentage}%)
+                        </div>
+                        <div class="card-interpretation">${pred.interpretation}</div>
+                    `;
+                    grid.appendChild(card);
+                }
+            });
+
+            // Show results section
+            document.getElementById('results').classList.add('show');
+            document.getElementById('results').scrollIntoView({ behavior: 'smooth' });
+        }
+
+        function showLoading(show) {
+            document.getElementById('loading').style.display = show ? 'block' : 'none';
+        }
+
+        function showError(message) {
+            const errorDiv = document.getElementById('error');
+            errorDiv.textContent = message;
+            errorDiv.classList.add('show');
+        }
+
+        function hideError() {
+            document.getElementById('error').classList.remove('show');
+        }
+
+        function resetForm() {
+            document.getElementById('assessmentForm').reset();
+            document.querySelectorAll('.scale-value').forEach(span => {
+                span.textContent = '4';
+            });
+            document.getElementById('results').classList.remove('show');
+            hideError();
+        }
+    </script>
+</body>
+</html>
