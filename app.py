@@ -9,9 +9,11 @@ import numpy as np
 import pandas as pd
 import json
 import os
+import torch
 from dataloader.preprocess import YScaler
 from config.tasks import TASKS
 from config.path import RESULTS
+from model.pytorch_model import load_model
 
 app = Flask(__name__)
 
@@ -160,30 +162,19 @@ MENTAL_HEALTH_LABELS = {
     }
 }
 
-def load_model():
-    """Load trained model if available."""
+def load_model_pytorch():
+    """Load trained PyTorch model if available."""
     global MODEL, Y_SCALER
 
-    model_path = os.path.join(RESULTS, 'tmp', '32-32-100epochs', 'SubNet.weights.h5')
+    model_path = os.path.join(RESULTS, 'tmp_pytorch', 'pytorch-100epochs', 'model.pt')
 
     if not os.path.exists(model_path):
         return False
 
     try:
-        from tensorflow.keras.models import Sequential
-        from tensorflow.keras.layers import Dense, Dropout
-
-        # Reconstruct model architecture
-        MODEL = Sequential()
-        MODEL.add(Dense(units=32, activation='relu', input_shape=(5,), dtype='float64'))
-        MODEL.add(Dropout(rate=0.2, dtype='float64'))
-        MODEL.add(Dense(units=32, activation='relu', dtype='float64'))
-        MODEL.add(Dropout(rate=0.2, dtype='float64'))
-        MODEL.add(Dense(units=13, activation=None, dtype='float64'))
-
-        # Load weights
-        MODEL.load_weights(model_path)
-        MODEL.compile(loss='mean_squared_error', optimizer='adam', metrics=['mse'])
+        # Load PyTorch model
+        MODEL = load_model(model_path, input_dims=5, output_dims=13)
+        MODEL.eval()
 
         # Initialize Y scaler
         dummy_data = pd.DataFrame()
@@ -226,9 +217,11 @@ def predict():
                 'predictions': None
             }), 400
 
-        # Make prediction
-        input_array = np.array([input_values], dtype=np.float64)
-        output_normalized = MODEL.predict(input_array, verbose=0)[0]
+        # Make prediction with PyTorch
+        input_tensor = torch.FloatTensor([input_values])
+        with torch.no_grad():
+            output_tensor = MODEL(input_tensor)
+        output_normalized = output_tensor.numpy()[0]
 
         # Rescale outputs to original ranges
         output_ranges = TASKS['default']['y']
@@ -313,13 +306,13 @@ def model_status():
     })
 
 if __name__ == '__main__':
-    print("Loading trained model...")
-    model_loaded = load_model()
+    print("Loading trained PyTorch model...")
+    model_loaded = load_model_pytorch()
 
     if model_loaded:
         print("✓ Model loaded successfully!")
     else:
-        print("✗ Model not found. Train the model first with: python train.py")
+        print("✗ Model not found. Train the model first with: python train_pytorch.py")
         print("  The app will still run but predictions won't be available.")
 
     print("\nStarting web server...")
