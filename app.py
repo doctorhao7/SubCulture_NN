@@ -15,7 +15,7 @@ from config.tasks import TASKS
 from config.path import RESULTS
 from model.pytorch_model import load_model
 
-app = Flask(__name__)
+app = Flask(__name__, static_folder='static', static_url_path='/static')
 
 # Global model and scaler
 MODEL = None
