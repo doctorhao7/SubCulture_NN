@@ -21,6 +21,16 @@ app = Flask(__name__, static_folder='static', static_url_path='/static')
 MODEL = None
 Y_SCALER = None
 
+# Load model on module import (for production deployment)
+print("Loading trained PyTorch model...")
+model_loaded = load_model_pytorch()
+
+if model_loaded:
+    print("✓ Model loaded successfully!")
+else:
+    print("✗ Model not found. Train the model first with: python train_pytorch.py")
+    print("  The app will still run but predictions won't be available.")
+
 # Assessment questions configuration
 ASSESSMENT_QUESTIONS = {
     'acg_id': {
@@ -314,15 +324,6 @@ def model_status():
     })
 
 if __name__ == '__main__':
-    print("Loading trained PyTorch model...")
-    model_loaded = load_model_pytorch()
-
-    if model_loaded:
-        print("✓ Model loaded successfully!")
-    else:
-        print("✗ Model not found. Train the model first with: python train_pytorch.py")
-        print("  The app will still run but predictions won't be available.")
-
     print("\nStarting web server...")
     print("Visit: http://localhost:5000")
     app.run(debug=True, port=5000)
