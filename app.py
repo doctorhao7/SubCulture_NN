@@ -167,24 +167,32 @@ def load_model_pytorch():
     global MODEL, Y_SCALER
 
     model_path = os.path.join(RESULTS, 'tmp_pytorch', 'pytorch-100epochs', 'model.pt')
+    print(f"Looking for model at: {model_path}")
+    print(f"Model file exists: {os.path.exists(model_path)}")
 
     if not os.path.exists(model_path):
+        print("Model file not found!")
         return False
 
     try:
+        print("Loading PyTorch model...")
         # Load PyTorch model
         MODEL = load_model(model_path, input_dims=5, output_dims=13)
         MODEL.eval()
+        print("Model loaded successfully!")
 
         # Initialize Y scaler
         dummy_data = pd.DataFrame()
         for key in TASKS['default']['y'].keys():
             dummy_data[key] = [0]
         Y_SCALER = YScaler(dummy_data, 'default')
+        print("Y scaler initialized!")
 
         return True
     except Exception as e:
         print(f"Error loading model: {e}")
+        import traceback
+        traceback.print_exc()
         return False
 
 @app.route('/')
