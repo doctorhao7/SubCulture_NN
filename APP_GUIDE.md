@@ -24,7 +24,6 @@ cd /Users/howliu/Developer/SubCulture_NN
 ## Running the Application
 
 ### Step 1: Train the Model
-First, ensure you have a trained model:
 
 ```bash
 python train.py
@@ -63,7 +62,7 @@ Visit: http://localhost:5000
 
 Open your web browser and navigate to:
 ```
-http://localhost:5000
+http:///xxxxxx
 ```
 
 ## Using the Assessment
