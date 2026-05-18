@@ -338,24 +338,11 @@ SubCulture_NN/
    - Collective self-esteem scales
    - Identity development in adolescence
 
-3. **Technical Documentation:**
-   - TensorFlow/Keras: https://tensorflow.org
-   - Flask: https://flask.palletsprojects.com
-   - Pandas: https://pandas.pydata.org
-
 ---
 
 ## ✨ Summary
 
-All requested tasks have been successfully completed:
-
-✅ **README Enhanced** - Comprehensive documentation of model, variables, and parameters  
-✅ **Dataset Expanded** - 300 samples with realistic synthetic data  
-✅ **Paths Fixed** - Dynamic configuration for any machine  
-✅ **Model Trained** - 100 epochs on expanded dataset with saved weights  
-✅ **Web Interface** - Beautiful, interactive assessment tool with predictions  
-
-The system is ready for use: run `python train.py` then `python app.py` and visit http://localhost:5000 to begin assessments!
+The system is ready for use: run `python train.py` then `python app.py`
 
 ---
 
